@@ -1,0 +1,24 @@
+<html ng-app=''>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>transition square demo page</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="js/dependencies/jquery-2.0.3.min.js"></script>
+    </head>
+    <body >
+        <div class="square-from"></div>
+        <div class="square-to"></div>
+        <script src="js/dependencies/requestAnimationFrame.js"></script>
+        <script src="js/square-transition.js"></script>
+        <script>
+            jQuery(document).ready(function ()
+            {
+                new SquareTransition ({
+                    from : $('.square-from'),
+                    to : $('.square-to'),
+                    callback : function (){console.log("done");}
+                });
+            });
+        </script>
+    </body>
+</html>
