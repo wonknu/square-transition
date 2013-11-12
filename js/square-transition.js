@@ -62,7 +62,9 @@
                 '-moz-transform-origin' : '0 0',
                 '-o-transform-origin' : '0 0',
                 '-ms-transform-origin' : '0 0',
-                'transform-origin' : '0 0'
+                'transform-origin' : '0 0',
+                top : '0',
+                left : '0'
             });
 
             if(this.options.appendElement){
