@@ -1,22 +1,79 @@
-<html ng-app=''>
+<!DOCTYPE html>
+<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>transition square demo page</title>
-        <link rel="stylesheet" href="css/styles.css">
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, target-densitydpi=device-dpi" />
+        <title>Sync My TV</title>
+        <style type="text/css" media="screen">
+            html{margin: 0;padding: 0;overflow:hidden;height:100%;width:100%;font-size:62.5%}body{margin: 0;padding: 0;overflow:hidden;width:100%;height:100%;background-color:#222}#wrapper .page#video 
+            .video-content{position:relative;height:57.5rem;z-index:50}#wrapper{margin: 0;padding: 0;height: 100%;width: 100%;overflow: hidden;}#wrapper .page#video .video-content #right-menu{display:block;position:absolute;top:21.5rem;right:-19.2rem;width:10.2rem;text-align:center}#wrapper .page#video .video-content #right-menu li{color:#9a9a9a;font-size:1rem;font-family:'Helvetica Neue Light',arial;display:block;height:5rem;padding-top:3.4rem;width:7rem;margin:0 auto 1rem}#wrapper .page#video .video-content #right-menu li#my-list{background:url('http://smtv.priv/img/tulles/btn_mylist.png') no-repeat center .5rem;background-size:auto 2.4rem}#wrapper .page#video .video-content #right-menu li#index{background:url('http://smtv.priv/img/tulles/btn_index.png') no-repeat center .5rem;background-size:auto 2.4rem}#wrapper .page#video .video-content #right-menu li#share{background:url('http://smtv.priv/img/tulles/btn_share.png') no-repeat center .3rem;background-size:auto 2.7rem}#wrapper .page#video .video-content #right-menu li#social{background:url('http://smtv.priv/img/tulles/btn_social.png') no-repeat center .5rem;background-size:auto 2.4rem}#wrapper .page#video .video-content #right-menu li#profil{background:url('http://smtv.priv/img/tulles/btn_profil.png') no-repeat center .3rem;background-size:auto 2.7rem}#wrapper .page#video .video-content #video-title{display:none;padding-top:10rem;font-family:'Forza-Medium',arial;font-weight:normal;font-size:2.4rem;color:#979797}#wrapper .page#video .video-content video{-webkit-transform-origin:100% 0;position:absolute;top:21.5rem;right:0;width:100%;height:36rem}#wrapper .page#video .video-bottom{height:19.3rem;position:relative}#wrapper .page#video .video-bottom #sync-status{background:url('http://smtv.priv/img/tulles/video_status_mic.png') no-repeat center top;-webkit-background-size:2.1rem auto;position:absolute;width:100%;height:6rem;bottom:1.5rem;left:0;right:0;margin:auto;text-align:center}#wrapper .page#video .video-bottom #sync-status p{font-family:'Forza-Book',arial;font-size:1.2rem;color:#575757;padding-top:4.4rem}#wrapper .page#video .video-bottom #player-control{opacity:.0;position:absolute;bottom:1rem;left:-19rem;z-index:100}#wrapper .page#video .video-bottom #player-control .player-btn{margin-right:.3rem;display:inline-block;color:#fff;border:.1rem solid #555;padding:.4rem .4rem;font-size:1.6rem;font-family:'Helvetica Neue'}#wrapper .page#video{background:url('../img/tulles/timeline_chapter_fake.png') no-repeat center 8.3rem,-webkit-linear-gradient(top,#282828 0,#121212 100%);background-size:100%;padding:0 19.2rem;position:relative}
+        </style>
         <script src="js/dependencies/jquery-2.0.3.min.js"></script>
     </head>
-    <body >
-        <div class="square-from"></div>
-        <div class="square-to"></div>
-        <script src="js/dependencies/requestAnimationFrame.js"></script>
-        <script src="js/square-transition.js"></script>
+    <body>
+        <div id="wrapper">
+            <!-- Bio page -->
+            <div id="bio-wrapper"></div>
+            
+            <!-- Video main page -->
+            <div id="video" class="page" style="display:block">
+                <p id="main-title">Le massacre de Tulle</p>
+                
+                <!-- Event Wrapper -->
+                <div id="event-wrapper">
+                    <div class="event-content"></div>
+                </div>
+                
+                <div class="video-content">
+                    <ul id="right-menu">
+                        <li id="my-list">Ma liste</li>
+                        <li id="index">Index</li>
+                        <li id="share">Partager</li>
+                        <li id="social">Social</li>
+                        <li id="profil">Profil</li>
+                    </ul>
+                    <p id="video-title"></p>
+                    <!-- Virer le muted --> 
+                    <video id="videoPlayer" muted controls poster="http://smtv.priv/img/tulles/video_poster.png">
+                        <!-- <source src="http://artestras.vo.llnwxd.net/o35/nogeo/PTWEB/048000/048700/048713-000-A_MQ_2_VOF_00532946_MP4-800_AMM-PTWEB.mp4" type="video/mp4"> -->
+                        <source src="http://mlharidon:Mln2012@ic.adfab.fr/prelude/MASSACRE_DE_TULLE_MOV.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-bottom">
+                    <div id="sync-status">
+                        <p>Je suis synchronisé à l'émission</p>
+                    </div>
+                    <div id="player-control">
+                        <div data-time="0" class="player-btn">Début</div>
+                        <div data-time="64" class="player-btn">1min04</div>
+                        <div data-time="220" class="player-btn">3min40</div>
+                        <div data-time="305" class="player-btn">5min05</div>
+                        <div data-time="318" class="player-btn">4min00</div>
+                        <div data-time="758" class="player-btn">12min38</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="favorites" style="display:block">
+                <div id="fav-picto"></div>
+                <div id="fav-back"></div>
+                <div class="fav-header">
+                    <p>Ma liste</p>
+                    <button>Tout afficher</button>
+                </div>
+                <div id="fav-list"></div>
+            </div>
+        </div> 
+        
+        <script type="text/javascript" src="http://asmtv.priv/js/dependencies/requestAnimationFrame.js"></script>
+        <script type="text/javascript" src="http://asmtv.priv/js/square-transition.js"></script>
         <script>
             jQuery(document).ready(function ()
             {
                 new SquareTransition ({
-                    from : $('.square-from'),
-                    to : $('.square-to'),
-                    callback : function (){console.log("done");}
+                    from : $('#videoPlayer'),
+                    to : $('#my-list')
                 });
             });
         </script>

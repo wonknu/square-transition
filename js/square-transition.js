@@ -27,7 +27,7 @@
                 to : null,
                 borderColor : '#4d4d4d',
                 appendElement : false,
-                coef : -1.6,
+                coef : -1,
                 scale : 1,
                 rotation : 0,
                 callback : null
@@ -46,7 +46,7 @@
         SquareTransition.prototype.createSquare = function ()
         {
             var self = this,
-                translate = 'translate(' + (this.startX + Math.sin(this.options.coef) * this.interval) + 'px,' + (this.startY + Math.cos(this.options.coef) * this.interval) + 'px)';
+                translate = 'translate(' + (this.startX + Math.sin(this.options.coef) * this.interval) + 'px,' + (this.startY + Math.cos(this.options.coef) * (this.interval * 0.2)) + 'px)';
             this.$square = $(document.createElement("div"));
             this.$square.css({
                 width : this.options.from.width() + "px",
@@ -63,8 +63,8 @@
                 '-o-transform-origin' : '0 0',
                 '-ms-transform-origin' : '0 0',
                 'transform-origin' : '0 0',
-                top : '0',
-                left : '0'
+                top : 0,
+                left :0
             });
 
             if(this.options.appendElement){
@@ -102,20 +102,22 @@
         SquareTransition.prototype.animate = function ()
         {
             var translate = '';
-            this.options.scale -= 0.025;
+            if(this.options.scale >= this.options.scaleTo)
+                this.options.scale -= 0.005;
             this.options.coef -= 0.1;
             if(this.options.coef)
-                translate += 'translate(' + (this.startX + Math.sin(this.options.coef) * this.interval) + 'px,' + (this.startY + Math.cos(this.options.coef) * this.interval) + 'px) ';
-            if(this.options.rotation <= 360)
-                translate += 'rotate(' + (this.options.rotation += 12) + 'deg) ';
-            if(this.options.scale > this.options.scaleTo)
-                translate += 'scale(' + this.options.scale + ',' + this.options.scale + ')';
+                translate += 'translate(' + (this.startX + Math.sin(this.options.coef) * (this.interval)) + 'px,' + (this.startY + Math.cos(this.options.coef) * (this.interval * .2)) + 'px) ';
+            //if(this.options.rotation <= 360)
+                translate += 'rotate(' + (this.options.rotation += 11) + 'deg) ';
+            //translate += 'scale(' + this.options.scale + ',' + this.options.scale + ')';
             if(translate !== '') this.$square.css({
                 '-webkit-transform' : translate,
                 '-moz-transform' : translate,
                 '-o-transform' : translate,
                 '-ms-transform' : translate,
-                'transform' : translate
+                'transform' : translate,
+                width : this.$square.width() * this.options.scale,
+                height : this.$square.height() * this.options.scale
             });
         };
 
