@@ -10,7 +10,6 @@
          * @param {number} options =>
          *      {jQuery Object} (container) from
          *      {jQuery Object} (container) to
-         *      {int} borderColor => default #4d4d4d
          *      {boolean} appendElement, tel if the container from should be append in the square
          *      {int} scale, the scale ratio => default to -1.6
          *      {int} coef, the coef that make the speed of the animation => default 1
@@ -25,7 +24,6 @@
             this.options = {
                 from : null,
                 to : null,
-                borderColor : '#4d4d4d',
                 appendElement : false,
                 coef : -1,
                 scale : 1,
@@ -45,26 +43,17 @@
          */
         SquareTransition.prototype.createSquare = function ()
         {
-            var self = this,
-                translate = 'translate(' + (this.startX + Math.sin(this.options.coef) * this.interval) + 'px,' + (this.startY + Math.cos(this.options.coef) * (this.interval * 0.2)) + 'px)';
-            this.$square = $(document.createElement("div"));
+            var self = this, animloop, counter = 1500;
+            this.$square = $('<div class="wrapper-square"><div class="square"></div></div>');
+            $('.square').css({
+                width : this.options.from.width() + "px",
+                height : this.options.from.height() + "px"
+            });
             this.$square.css({
                 width : this.options.from.width() + "px",
                 height : this.options.from.height() + "px",
-                '-webkit-transform' : translate,
-                '-moz-transform' : translate,
-                '-o-transform' : translate,
-                '-ms-transform' : translate,
-                'transform' : translate,
-                border : '1px solid ' + this.options.borderColor,
-                position : "absolute",
-                '-webkit-transform-origin' : '0 0',
-                '-moz-transform-origin' : '0 0',
-                '-o-transform-origin' : '0 0',
-                '-ms-transform-origin' : '0 0',
-                'transform-origin' : '0 0',
-                top : 0,
-                left :0
+                top : this.options.from.offset().left + 'px',
+                left :this.options.from.offset().top + 'px'
             });
 
             if(this.options.appendElement){
@@ -72,9 +61,20 @@
                 this.options.from.css({margin : 0});
             }
             $('body').append(this.$square);
-            var animloop = function ()
+            this.$square.css(
+                {
+                    width : this.options.to.width() + "px",
+                    height : this.options.to.height() + "px",
+                    top : this.options.to.offset().top + 'px',
+                    left :this.options.to.offset().left + 'px'
+                },
+                counter,
+                function () {}
+            );
+            $('.square').addClass('rotated');
+            animloop = function ()
             {
-                if(self.options.coef < -4.6){
+                if((counter-=18) < 650){
                     if(self.clones.length > 0){
                         self.clones.shift().remove();
                     }
@@ -86,10 +86,22 @@
                     }
                 }
                 else{
-                    var clone = self.$square.clone();
+                    var clone = $('<div class="clone-wrapper-square"><div class="clone-square"></div></div>');
+                    clone.css({
+                        width   : self.$square.css('width'),
+                        height  : self.$square.css('height'),
+                        top     : self.$square.css('top'),
+                        left    : self.$square.css('left')
+                    });
+                    clone.find('.clone-square').css({
+                        '-moz-transform':self.$square.find('.square').css('-moz-transform'),
+                        '-webkit-transform':self.$square.find('.square').css('-webkit-transform'),
+                        '-o-transform':self.$square.find('.square').css('-o-transform'),
+                        '-ms-transform':self.$square.find('.square').css('-ms-transform')
+                    });
+                    //clone.find('clone-square').css(self.$square.find('.square').css());
                     self.clones.push(clone);
                     clone.appendTo('body');
-                    self.animate();
                 }
                 requestAnimFrame(animloop);
             };
